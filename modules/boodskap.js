@@ -40,6 +40,32 @@ Boodskap.prototype.login = function (data, cbk) {
     });
 };
 
+Boodskap.prototype.register = function (data, cbk) {
+
+    const self = this;
+
+    request.post({
+        uri: self.API_URL + '/domain/register',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(data),
+    }, function (err, res, body) {
+
+        if(!err) {
+
+            if (res.statusCode === 200) {
+                cbk(true, JSON.parse(res.body))
+            } else {
+                self.error(res.body)
+                cbk(false, JSON.parse(res.body))
+            }
+        }else{
+            self.error(err)
+            cbk(false,null)
+        }
+
+    });
+};
+
 Boodskap.prototype.authLogin = function (data, cbk) {
 
     const self = this;
@@ -66,7 +92,7 @@ Boodskap.prototype.authLogin = function (data, cbk) {
     });
 };
 
-Boodskap.prototype.logout = function () {
+Boodskap.prototype.logout = function (cbk) {
 
     const self = this;
 
@@ -76,9 +102,9 @@ Boodskap.prototype.logout = function () {
     }, function (err, res, body) {
 
         if(!err) {
-
+            cbk(true)
         }else{
-
+            cbk(false)
         }
 
     });
