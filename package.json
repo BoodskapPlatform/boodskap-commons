@@ -1,6 +1,6 @@
 {
   "name": "boodskap-commons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Boodskap IoT Platform API",
   "main": "index.js",
   "scripts": {

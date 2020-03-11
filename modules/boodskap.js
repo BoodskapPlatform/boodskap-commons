@@ -14,8 +14,33 @@ var Boodskap = function (conf, obj) {
 };
 module.exports = Boodskap;
 
-
 Boodskap.prototype.login = function (data, cbk) {
+
+    const self = this;
+
+    request.post({
+        uri: self.API_URL + '/domain/login',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(data),
+    }, function (err, res, body) {
+
+        if(!err) {
+
+            if (res.statusCode === 200) {
+                cbk(true, JSON.parse(res.body))
+            } else {
+                self.error(res.body)
+                cbk(false, JSON.parse(res.body))
+            }
+        }else{
+            self.error(err)
+            cbk(false,null)
+        }
+
+    });
+};
+
+Boodskap.prototype.authLogin = function (data, cbk) {
 
     const self = this;
 
