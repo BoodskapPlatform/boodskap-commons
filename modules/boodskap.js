@@ -66,6 +66,32 @@ Boodskap.prototype.register = function (data, cbk) {
     });
 };
 
+Boodskap.prototype.resetPassword = function (data, cbk) {
+
+    const self = this;
+
+    request.get({
+        uri: self.API_URL + '/domain/password/reset/'+data,
+        headers: {'content-type': 'application/json'},
+
+    }, function (err, res, body) {
+
+        if(!err) {
+
+            if (res.statusCode === 200) {
+                cbk(true, JSON.parse(res.body))
+            } else {
+                self.error(res.body)
+                cbk(false, JSON.parse(res.body))
+            }
+        }else{
+            self.error(err)
+            cbk(false,null)
+        }
+
+    });
+};
+
 Boodskap.prototype.authLogin = function (data, cbk) {
 
     const self = this;
